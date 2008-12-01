@@ -1,0 +1,51 @@
+== given_that
+
+Examples!
+
+    describe 'Shopping cart checkout' do
+      given_that :user_logged_in, :checkout_is_created, :and, :balance_due do
+        it "should require a credit card" do
+          @checkout.should require_credit_card?
+        end
+      end
+      
+      given_that [:user_not_logged_in, :and, [:checkout_is_created, :and, [:balance_due, :or, :no_balance_due]]] do
+        it "should redirect user to login" do
+          @response.should redirect_to("/login")
+        end
+      end
+    end
+
+    def user_logged_in
+      login_as(:quentin)
+    end
+
+    def user_not_logged_in
+      # ...
+    end
+
+    def checkout_is_created
+      @checkout = Checkout.new
+    end
+
+    def balance_due
+      # ...
+    end
+
+    def no_balance_due
+      # ...
+    end
+
+    def user_not_logged_in
+      # ...
+    end
+
+= To do
+
+- Make this a gem.
+- fix tests? (pass, but maybe don't actually run)
+
+= Authors
+
+Steven Soroka - ssoroka78@gmail.com
+Zach Holt
